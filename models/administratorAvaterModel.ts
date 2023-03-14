@@ -1,10 +1,10 @@
 import { Schema, model } from "mongoose";
 
-interface AdministratorAvater {}
+interface AdministratorAvater {
+  fileId: String;
+}
 
-const administratorAvaterSchema = new Schema<AdministratorAvater>({
-  fileId: String,
-});
+const administratorAvaterSchema = new Schema<AdministratorAvater>();
 
 const administratorAvaterModel = model<AdministratorAvater>(
   "AdministratorAvater",

@@ -25,7 +25,7 @@ const getAdministratorAvater = asyncHandler(
 
     const test = await administratorAvaterModel.find({ fileId: avaterId });
 
-    res.json({ test });
+    res.send({ msg: 123 });
   }
 );
 
