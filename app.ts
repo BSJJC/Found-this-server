@@ -7,6 +7,7 @@ dotenv.config();
 
 import administratorRouter from "./routes/administratorRoute";
 import administratorAvaterRoute from "./routes/administratorAvaterRoute";
+import platformModelRouter from "./routes/platformModelRoute";
 
 connectDB();
 
@@ -19,6 +20,7 @@ app.use(cors({ origin: "*" }));
 
 app.use("/api/administrator", administratorRouter);
 app.use("/api/administratorAvater", administratorAvaterRoute);
+app.use("/api/platformModel", platformModelRouter);
 
 app.listen(port, () => {
   console.log(

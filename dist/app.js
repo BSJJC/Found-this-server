@@ -11,6 +11,7 @@ const db_1 = __importDefault(require("./config/db"));
 dotenv_1.default.config();
 const administratorRoute_1 = __importDefault(require("./routes/administratorRoute"));
 const administratorAvaterRoute_1 = __importDefault(require("./routes/administratorAvaterRoute"));
+const platformModelRoute_1 = __importDefault(require("./routes/platformModelRoute"));
 (0, db_1.default)();
 const port = process.env.PORT || 5000;
 const app = (0, express_1.default)();
@@ -19,6 +20,7 @@ app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, cors_1.default)({ origin: "*" }));
 app.use("/api/administrator", administratorRoute_1.default);
 app.use("/api/administratorAvater", administratorAvaterRoute_1.default);
+app.use("/api/platformModel", platformModelRoute_1.default);
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`.cyan.underline);
 });
