@@ -11,6 +11,11 @@ import asyncHandler from "express-async-handler";
 
 require("dotenv").config();
 
+/**
+ * @desc            Upload administrator avater
+ * @route           POST /api/administrator/upload
+ * @access        Public
+ */
 const uploadAdministratorAvater = asyncHandler(
   async (req: Request, res: Response) => {
     try {
@@ -35,6 +40,11 @@ const uploadAdministratorAvater = asyncHandler(
   }
 );
 
+/**
+ * @desc            Get administrator avater
+ * @route           GET /api/administrator/:administratorAvaterId
+ * @access        Public
+ */
 const getAdministratorAvater = asyncHandler(
   async (req: Request, res: Response) => {
     try {
