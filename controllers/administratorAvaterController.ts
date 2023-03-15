@@ -1,31 +1,51 @@
 import { Request, Response } from "express";
+import { MongoClient, GridFSBucket, ObjectId } from "mongodb";
 import asyncHandler from "express-async-handler";
 
-import administratorAvaterModel from "../models/administratorAvaterModel";
+require("dotenv").config();
 
 const uploadAdministratorAvater = asyncHandler(
   async (req: Request, res: Response) => {
-    if (req.file) {
-      //@ts-ignore
-      const id = req.file.id;
-      const test = await administratorAvaterModel.create({
-        fileId: id,
+    try {
+      const client = await MongoClient.connect(process.env.MONGO_URI as string);
+      const db = client.db();
+      const imagesBucket = new GridFSBucket(db, {
+        bucketName: "administratorAvaters",
       });
 
-      res.json(test);
-    } else {
-      res.status(400).send("Please upload a valid image");
+      const file = req.file as Express.Multer.File;
+      const buffer = file.buffer;
+      const uploadStream = imagesBucket.openUploadStream(file.originalname);
+      uploadStream.end(buffer);
+      res.send("Image uploaded successfully");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error uploading image");
     }
   }
 );
 
 const getAdministratorAvater = asyncHandler(
   async (req: Request, res: Response) => {
-    const avaterId = req.body.id;
+    try {
+      const client = await MongoClient.connect(process.env.MONGO_URI as string);
 
-    const test = await administratorAvaterModel.find({ fileId: avaterId });
+      const db = client.db();
+      const imagesBucket = new GridFSBucket(db, {
+        bucketName: "administratorAvaters",
+      });
 
-    res.send({ msg: 123 });
+      const imageId: ObjectId = new ObjectId(req.params.administratorAvaterId);
+
+      console.log(imageId);
+
+      const downloadStream = imagesBucket.openDownloadStream(imageId);
+      res.set("Content-Type", "image/jpeg");
+      downloadStream.pipe(res);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error downloading image");
+    }
   }
 );
 

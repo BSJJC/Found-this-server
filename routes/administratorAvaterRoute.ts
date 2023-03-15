@@ -1,19 +1,20 @@
 import { Router } from "express";
-import uploadAvater from "../middleware/avaterUploadMiddleware";
+import multer from "multer";
 import {
   uploadAdministratorAvater,
   getAdministratorAvater,
 } from "../controllers/administratorAvaterController";
 
+const upload = multer();
+
 const administratorAvaterRoute = Router();
 
 administratorAvaterRoute.post(
   "/upload",
-  uploadAvater.single("avater"),
+  upload.single("avater"),
   uploadAdministratorAvater
 );
 
-
-administratorAvaterRoute.get("/", getAdministratorAvater);
+administratorAvaterRoute.get("/:administratorAvaterId", getAdministratorAvater);
 
 export default administratorAvaterRoute;
