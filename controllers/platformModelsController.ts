@@ -3,6 +3,22 @@ import asyncHandler from "express-async-handler";
 
 import platformModel from "../models/platformModelsModel";
 
+/**
+ * @desc            Get all models
+ * @route           GET /api/platformModel/getModels
+ * @access        Public
+ */
+const getModels = asyncHandler(async (req: Request, res: Response) => {
+  const models = await platformModel.find();
+
+  res.status(200).json(models);
+});
+
+/**
+ * @desc            Register new model
+ * @route           GET /api/platformModel/addModel
+ * @access        Public
+ */
 const registerModel = asyncHandler(async (req: Request, res: Response) => {
   const { title, intro } = req.body;
 
@@ -19,7 +35,6 @@ const registerModel = asyncHandler(async (req: Request, res: Response) => {
 
   if (newPlatformModel) {
     res.status(200).json({
-      _id: newPlatformModel.id,
       title,
       intro,
     });
@@ -29,6 +44,11 @@ const registerModel = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 
+/**
+ * @description          Delete model
+ * @route                     DELETE /api/platformModel/deleteModel
+ * @access                 Public
+ */
 const deleteModel = asyncHandler(async (req: Request, res: Response) => {
   const { title } = req.body;
 
@@ -40,4 +60,4 @@ const deleteModel = asyncHandler(async (req: Request, res: Response) => {
   });
 });
 
-export { registerModel, deleteModel };
+export { getModels, registerModel, deleteModel };
