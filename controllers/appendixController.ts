@@ -56,13 +56,9 @@ const getAppendix = asyncHandler(async (req: Request, res: Response) => {
 
     downloadStream.on("end", () => {
       const base64Data = fileData.toString("base64");
-
-      // Set the response headers
       res.set({
         "Content-Type": "application/octet-stream",
       });
-
-      // Send the base64-encoded file as the response body
       res.send(base64Data);
     });
   } catch (err) {
