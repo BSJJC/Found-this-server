@@ -6,7 +6,6 @@ import {
 } from "../controllers/administratorAvaterController";
 
 const upload = multer();
-
 const administratorAvaterRoute = Router();
 
 administratorAvaterRoute.post(

@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import dotenv from "dotenv";
 import {
   MongoClient,
   GridFSBucket,
@@ -8,8 +9,7 @@ import {
   GridFSBucketReadStream,
 } from "mongodb";
 import asyncHandler from "express-async-handler";
-
-require("dotenv").config();
+dotenv.config();
 
 /**
  * @desc            Upload administrator avater

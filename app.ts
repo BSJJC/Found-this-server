@@ -9,6 +9,7 @@ import administratorRouter from "./routes/administratorRoute";
 import administratorAvaterRoute from "./routes/administratorAvaterRoute";
 import platformModelRouter from "./routes/platformModelRoute";
 import topicRouter from "./routes/topicRoute";
+import appendixRoute from "./routes/appendixRoute";
 
 connectDB();
 
@@ -23,6 +24,7 @@ app.use("/api/administrator", administratorRouter);
 app.use("/api/administratorAvater", administratorAvaterRoute);
 app.use("/api/platformModel", platformModelRouter);
 app.use("/api/topic", topicRouter);
+app.use("/api/appendix", appendixRoute);
 
 app.listen(port, () => {
   console.log(
