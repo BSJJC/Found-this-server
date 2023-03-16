@@ -9,6 +9,7 @@ import {
   GridFSBucketReadStream,
 } from "mongodb";
 import asyncHandler from "express-async-handler";
+
 dotenv.config();
 
 const uploadAppendix = asyncHandler(async (req: Request, res: Response) => {
@@ -39,17 +40,31 @@ const getAppendix = asyncHandler(async (req: Request, res: Response) => {
     const client: MongoClient = await MongoClient.connect(
       process.env.MONGO_URI as string
     );
-
     const db: Db = client.db();
     const fileBucket: GridFSBucket = new GridFSBucket(db, {
       bucketName: "appendix",
     });
-
     const fileId: ObjectId = new ObjectId(req.params.fileId);
-
     const downloadStream: GridFSBucketReadStream =
       fileBucket.openDownloadStream(fileId);
-    downloadStream.pipe(res);
+
+    let fileData = Buffer.from([]);
+
+    downloadStream.on("data", (chunk) => {
+      fileData = Buffer.concat([fileData, chunk]);
+    });
+
+    downloadStream.on("end", () => {
+      const base64Data = fileData.toString("base64");
+
+      // Set the response headers
+      res.set({
+        "Content-Type": "application/octet-stream",
+      });
+
+      // Send the base64-encoded file as the response body
+      res.send(base64Data);
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send("Error fetch appendix");
