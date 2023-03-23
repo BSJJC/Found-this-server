@@ -14,6 +14,7 @@ const administratorAvaterRoute_1 = __importDefault(require("./routes/administrat
 const platformModelRoute_1 = __importDefault(require("./routes/platformModelRoute"));
 const topicRoute_1 = __importDefault(require("./routes/topicRoute"));
 const appendixRoute_1 = __importDefault(require("./routes/appendixRoute"));
+const userRoute_1 = __importDefault(require("./routes/userRoute"));
 (0, db_1.default)();
 const port = process.env.PORT || 5000;
 const app = (0, express_1.default)();
@@ -25,6 +26,7 @@ app.use("/api/administratorAvater", administratorAvaterRoute_1.default);
 app.use("/api/platformModel", platformModelRoute_1.default);
 app.use("/api/topic", topicRoute_1.default);
 app.use("/api/appendix", appendixRoute_1.default);
+app.use("/api/user", userRoute_1.default);
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`.cyan.underline);
 });
