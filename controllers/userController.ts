@@ -11,7 +11,7 @@ import UserModel from "../models/userModel";
  * @access                 Public
  */
 const registerUser = asyncHandler(async (req: Request, res: Response) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
 
   const userExists = await UserModel.findOne({ email });
   if (userExists) {
@@ -39,4 +39,42 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 
-export { registerUser };
+/**
+ * @description        Authenticate user
+ * @router                 POST /api/user/login
+ * @access               Public
+ */
+const loginUser = asyncHandler(async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  const user = await UserModel.findOne({ email });
+  if (user && (await bcrypt.compare(password, user.password))) {
+    res.status(200).json({
+      _id: user.id,
+      email: user.email,
+      token: generateToken(user.id, 1, "d"),
+    });
+  } else {
+    res.status(400).json({ reason: "Email or password wrong" });
+    throw new Error("Invalid credentials");
+  }
+});
+
+/**
+ * @desc            Get administrator data
+ * @route           GET /api/administrator/administratorData
+ * @access        Public
+ */
+const getUserData = asyncHandler(async (req: Request, res: Response) => {
+  //@ts-ignore
+  const { email, password } = await UserModel.findById(
+    req.body.administrator.id
+  );
+
+  res.status(200).json({
+    email,
+    password,
+  });
+});
+
+export { registerUser, loginUser, getUserData };
