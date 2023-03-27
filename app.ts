@@ -11,6 +11,7 @@ import platformModelRouter from "./routes/platformModelRoute";
 import topicRouter from "./routes/topicRoute";
 import appendixRoute from "./routes/appendixRoute";
 import userRoutter from "./routes/userRoute";
+import topicBackgroundRoute from "./routes/topicBackgroundRoute";
 
 connectDB();
 
@@ -27,6 +28,7 @@ app.use("/api/platformModel", platformModelRouter);
 app.use("/api/topic", topicRouter);
 app.use("/api/appendix", appendixRoute);
 app.use("/api/user", userRoutter);
+app.use("/api/topicBackground", topicBackgroundRoute);
 
 app.listen(port, () => {
   console.log(
