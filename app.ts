@@ -5,9 +5,7 @@ import cors from "cors";
 import connectDB from "./config/db";
 dotenv.config();
 
-import administratorRouter from "./routes/administratorRoute";
-import topicRouter from "./routes/topicRoute";
-import userRoutter from "./routes/userRoute";
+import userAvaterRouter from "./routes/userAvaterRoute";
 
 connectDB();
 
@@ -18,9 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: "*" }));
 
-app.use("/api/administrator", administratorRouter);
-app.use("/api/topic", topicRouter);
-app.use("/api/user", userRoutter);
+app.use("/api/userAvater", userAvaterRouter);
 
 app.listen(port, () => {
   console.log(
