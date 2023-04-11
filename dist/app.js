@@ -16,7 +16,7 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, cors_1.default)({ origin: "*" }));
-app.use("/api/userAvater", userAvaterRoute_1.default);
+app.use("/api/userAvaters", userAvaterRoute_1.default);
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`.cyan.underline);
 });

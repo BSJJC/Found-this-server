@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: "*" }));
 
-app.use("/api/userAvater", userAvaterRouter);
+app.use("/api/userAvaters", userAvaterRouter);
 
 app.listen(port, () => {
   console.log(

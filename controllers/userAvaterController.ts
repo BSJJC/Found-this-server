@@ -15,19 +15,27 @@ import {
  * @access                 Public
  */
 const uploadUserAvater = asyncHandler(async (req: Request, res: Response) => {
-  const { binaryString } = req.body;
-
-  const avater = await UserAvaterModel.create({
-    binaryString: binaryString,
-  });
-
-  if (avater) {
-    res.status(200).json({
-      binaryString,
+  try {
+    const client: MongoClient = await MongoClient.connect(
+      process.env.MONGO_URI as string
+    );
+    const db: Db = client.db();
+    const fileBucket: GridFSBucket = new GridFSBucket(db, {
+      bucketName: "userAvaters",
     });
-  } else {
-    res.status(400);
-    throw new Error("avater upload failed");
+
+    const file: Express.Multer.File = req.file as Express.Multer.File;
+
+    const buffer: Buffer = file.buffer;
+    const uploadStream: GridFSBucketWriteStream = fileBucket.openUploadStream(
+      file.originalname
+    );
+
+    uploadStream.end(buffer);
+    res.send("Appendix uploaded successfully");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error uploading appendix");
   }
 });
 
@@ -45,27 +53,3 @@ const getUserAvater = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export { uploadUserAvater, getUserAvater };
-
-const uploadAdministratorAvater = asyncHandler(
-  async (req: Request, res: Response) => {
-    try {
-      const client: MongoClient = await MongoClient.connect(
-        process.env.MONGO_URI as string
-      );
-      const db: Db = client.db();
-      const imagesBucket: GridFSBucket = new GridFSBucket(db, {
-        bucketName: "administratorAvaters",
-      });
-
-      const file: Express.Multer.File = req.file as Express.Multer.File;
-      const buffer: Buffer = file.buffer;
-      const uploadStream: GridFSBucketWriteStream =
-        imagesBucket.openUploadStream(file.originalname);
-      uploadStream.end(buffer);
-      res.send("administrtor avater uploaded successfully");
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("Error uploading image");
-    }
-  }
-);
