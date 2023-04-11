@@ -24,7 +24,10 @@ const uploadUserAvater = asyncHandler(async (req: Request, res: Response) => {
       bucketName: "userAvaters",
     });
 
-    const file: Express.Multer.File = req.file as Express.Multer.File;
+    const file: Express.Multer.File = req.body
+      .userAvater as Express.Multer.File;
+
+    console.log(file);
 
     const buffer: Buffer = file.buffer;
     const uploadStream: GridFSBucketWriteStream = fileBucket.openUploadStream(
@@ -32,7 +35,9 @@ const uploadUserAvater = asyncHandler(async (req: Request, res: Response) => {
     );
 
     uploadStream.end(buffer);
-    res.send("Appendix uploaded successfully");
+    res.json({
+      msg: "new avater upload done",
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send("Error uploading appendix");
