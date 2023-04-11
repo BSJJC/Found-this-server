@@ -10,6 +10,7 @@ const cors_1 = __importDefault(require("cors"));
 const db_1 = __importDefault(require("./config/db"));
 dotenv_1.default.config();
 const userAvaterRoute_1 = __importDefault(require("./routes/userAvaterRoute"));
+const userRoute_1 = __importDefault(require("./routes/userRoute"));
 (0, db_1.default)();
 const port = process.env.PORT || 5000;
 const app = (0, express_1.default)();
@@ -17,6 +18,7 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, cors_1.default)({ origin: "*" }));
 app.use("/api/userAvaters", userAvaterRoute_1.default);
+app.use("/api/user", userRoute_1.default);
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`.cyan.underline);
 });

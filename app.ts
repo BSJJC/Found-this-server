@@ -6,6 +6,7 @@ import connectDB from "./config/db";
 dotenv.config();
 
 import userAvaterRouter from "./routes/userAvaterRoute";
+import userRouter from "./routes/userRoute";
 
 connectDB();
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: "*" }));
 
 app.use("/api/userAvaters", userAvaterRouter);
+app.use("/api/user", userRouter);
 
 app.listen(port, () => {
   console.log(

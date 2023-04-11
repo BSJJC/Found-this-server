@@ -13,8 +13,8 @@ import UserModel from "../models/userModel";
 const registerUser = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
-  const userExists = await UserModel.findOne({ email });
-  if (userExists) {
+  const exists = await UserModel.findOne({ email });
+  if (exists) {
     res.status(400);
     throw new Error("User already exists");
   }

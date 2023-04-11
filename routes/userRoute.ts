@@ -6,10 +6,10 @@ import {
 } from "../controllers/userController";
 import protect from "../middleware/authMiddleware";
 
-const userRoutter = Router();
+const userRouter = Router();
 
-userRoutter.post("/", registerUser);
-userRoutter.post("/login", loginUser);
-userRoutter.get("/userData", protect, getUserData);
+userRouter.post("/signUp", registerUser);
+userRouter.post("/login", loginUser);
+// userRouter.get("/userData", protect, getUserData);
 
-export default userRoutter;
+export default userRouter;
