@@ -1,11 +1,11 @@
 import { Schema, model } from "mongoose";
 
 interface UserAvater {
-  binaryString: string;
+  userAvater: string;
 }
 
 const UserAvaterSchema = new Schema<UserAvater>({
-  binaryString: {
+  userAvater: {
     type: String,
   },
 });

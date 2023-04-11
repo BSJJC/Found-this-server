@@ -27,9 +27,8 @@ const uploadUserAvater = asyncHandler(async (req: Request, res: Response) => {
     const file: Express.Multer.File = req.body
       .userAvater as Express.Multer.File;
 
-    console.log(file);
-
     const buffer: Buffer = file.buffer;
+
     const uploadStream: GridFSBucketWriteStream = fileBucket.openUploadStream(
       file.originalname
     );
