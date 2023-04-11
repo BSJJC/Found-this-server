@@ -1,14 +1,8 @@
 import { Schema, model } from "mongoose";
 
-interface UserAvater {
-  userAvater: string;
-}
+interface UserAvater {}
 
-const UserAvaterSchema = new Schema<UserAvater>({
-  userAvater: {
-    type: String,
-  },
-});
+const UserAvaterSchema = new Schema<UserAvater>();
 
 const UserAvaterModel = model<UserAvater>("UserAvaters", UserAvaterSchema);
 
