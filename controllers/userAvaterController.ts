@@ -2,6 +2,12 @@ import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 
 import UserAvaterModel from "../models/userAvatersModel";
+import {
+  Db,
+  GridFSBucket,
+  GridFSBucketWriteStream,
+  MongoClient,
+} from "mongodb";
 
 /**
  * @description          Upload new user avater
@@ -39,3 +45,27 @@ const getUserAvater = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export { uploadUserAvater, getUserAvater };
+
+const uploadAdministratorAvater = asyncHandler(
+  async (req: Request, res: Response) => {
+    try {
+      const client: MongoClient = await MongoClient.connect(
+        process.env.MONGO_URI as string
+      );
+      const db: Db = client.db();
+      const imagesBucket: GridFSBucket = new GridFSBucket(db, {
+        bucketName: "administratorAvaters",
+      });
+
+      const file: Express.Multer.File = req.file as Express.Multer.File;
+      const buffer: Buffer = file.buffer;
+      const uploadStream: GridFSBucketWriteStream =
+        imagesBucket.openUploadStream(file.originalname);
+      uploadStream.end(buffer);
+      res.send("administrtor avater uploaded successfully");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error uploading image");
+    }
+  }
+);
